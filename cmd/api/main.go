@@ -12,8 +12,9 @@ func main() {
 	config, err := config.LoadConfig()
 	db, dbErr := db.NewPostgresDB(config.DB)
 	go func() {
-		httpRoutes.SetupRoutes(config.HTTP)
+		httpRoutes.SetupRoutes(config.HTTP, db)
 	}()
+
 	if dbErr != nil {
 		fmt.Printf("Failed to connect to database: %v", dbErr)
 	}
@@ -23,3 +24,4 @@ func main() {
 	fmt.Println("Database connected successfully", db)
 	select {}
 }
+
